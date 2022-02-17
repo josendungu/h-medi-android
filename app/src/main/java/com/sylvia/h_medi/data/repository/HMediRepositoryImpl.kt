@@ -11,7 +11,13 @@ class HMediRepositoryImpl @Inject constructor(
     private val api: HMediApi
 ): HMediRepository {
     override suspend fun registerPatient(patient: Patient): PatientDto {
-        return api.registerPatient(patient)
+        return api.registerPatient(
+            patient.firstName,
+            patient.lastName,
+            patient.phoneNumber,
+            patient.gender,
+            patient.password!!
+        )
     }
 
     override suspend fun loginPatient(phoneNumber: String, password: String): LoginDto {

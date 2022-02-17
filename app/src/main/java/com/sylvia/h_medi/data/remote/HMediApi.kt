@@ -7,9 +7,15 @@ import retrofit2.http.*
 
 interface HMediApi {
 
+    @FormUrlEncoded
+    @Headers("Accept: application/json")
     @POST("patients")
     suspend fun registerPatient(
-        @Body patient: Patient
+        @Field("first_name") firstName: String,
+        @Field("last_name") lastName: String,
+        @Field("phone_number") phoneNumber: String ,
+        @Field("gender") gender: String ,
+        @Field("password") password: String
     ): PatientDto
 
     @PUT("patients/{patientId}")
