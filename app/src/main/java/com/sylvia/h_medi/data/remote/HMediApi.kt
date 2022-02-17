@@ -4,16 +4,27 @@ import com.sylvia.h_medi.data.remote.dto.AppointmentDto
 import com.sylvia.h_medi.data.remote.dto.DoctorDto
 import com.sylvia.h_medi.data.remote.dto.PatientDto
 import com.sylvia.h_medi.data.remote.dto.SpecialistDto
+import com.sylvia.h_medi.domain.model.Appointment
+import com.sylvia.h_medi.domain.model.Patient
 import retrofit2.http.*
 
 interface HMediApi {
 
     @POST("patients")
-    suspend fun registerPatient(): PatientDto
+    suspend fun registerPatient(
+        @Body patient: Patient
+    ): PatientDto
 
     @PUT("patients/{patientId}")
     suspend fun updatePatient(
-        @Path("patientId") patientId: Int
+        @Path("patientId") patientId: Int,
+        @Body patient: Patient
+    ): Boolean
+
+    @POST("login")
+    suspend fun login(
+        @Body phoneNumber: String,
+        @Body password: String
     ): Boolean
 
 
@@ -35,8 +46,10 @@ interface HMediApi {
 
 
 
-    @GET("appointments")
-    suspend fun getUpcomingAppointments(): List<AppointmentDto>
+    @GET("appointments/patient/{patientId}")
+    suspend fun getUpcomingAppointments(
+        @Path("patientId") patientId: Int,
+    ): List<AppointmentDto>
 
     @GET("appointments/{appointmentId}")
     suspend fun getAppointmentDetails(
@@ -44,7 +57,9 @@ interface HMediApi {
     ): AppointmentDto
 
     @POST("appointments")
-    suspend fun addAppointment(): AppointmentDto
+    suspend fun addAppointment(
+        @Body appointment: Appointment
+    ): AppointmentDto
 
     @DELETE("appointments/{appointmentId}")
     suspend fun deleteAppointment(
@@ -53,7 +68,8 @@ interface HMediApi {
 
     @PUT("appointments/{appointmentId}")
     suspend fun updateAppointment(
-        @Path("appointmentId") appointmentId: Int
+        @Path("appointmentId") appointmentId: Int,
+        @Body appointment: Appointment
     ): Boolean
 
 

@@ -8,7 +8,7 @@ data class AppointmentDto(
     val date: Int,
     val doctor: DoctorDto,
     @SerializedName("id")
-    val appointment_id: Int
+    val appointmentId: Int
 )
 
 fun AppointmentDto.toAppointment(): Appointment{
@@ -16,6 +16,6 @@ fun AppointmentDto.toAppointment(): Appointment{
         time = time,
         date = date,
         doctor = doctor.toDoctor(),
-        appointment_id = appointment_id
+        appointmentId = appointmentId
     )
 }

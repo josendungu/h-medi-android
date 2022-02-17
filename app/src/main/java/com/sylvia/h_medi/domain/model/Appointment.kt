@@ -5,5 +5,5 @@ data class Appointment(
     val time: String,
     val date: Int,
     val doctor: Doctor,
-    val appointment_id: Int
+    val appointmentId: Int
 )
