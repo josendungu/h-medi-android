@@ -1,10 +1,7 @@
 package com.sylvia.h_medi.data.repository
 
 import com.sylvia.h_medi.data.remote.HMediApi
-import com.sylvia.h_medi.data.remote.dto.AppointmentDto
-import com.sylvia.h_medi.data.remote.dto.DoctorDto
-import com.sylvia.h_medi.data.remote.dto.PatientDto
-import com.sylvia.h_medi.data.remote.dto.SpecialistDto
+import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
 import com.sylvia.h_medi.domain.model.Patient
 import com.sylvia.h_medi.domain.repository.HMediRepository
@@ -17,7 +14,7 @@ class HMediRepositoryImpl @Inject constructor(
         return api.registerPatient(patient)
     }
 
-    override suspend fun loginPatient(phoneNumber: String, password: String): Boolean {
+    override suspend fun loginPatient(phoneNumber: String, password: String): LoginDto {
         return api.login(phoneNumber, password)
     }
 

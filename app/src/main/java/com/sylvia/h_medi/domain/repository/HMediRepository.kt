@@ -1,9 +1,6 @@
 package com.sylvia.h_medi.domain.repository
 
-import com.sylvia.h_medi.data.remote.dto.AppointmentDto
-import com.sylvia.h_medi.data.remote.dto.DoctorDto
-import com.sylvia.h_medi.data.remote.dto.PatientDto
-import com.sylvia.h_medi.data.remote.dto.SpecialistDto
+import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
 import com.sylvia.h_medi.domain.model.Patient
 
@@ -11,7 +8,7 @@ interface HMediRepository {
 
     suspend fun registerPatient(patient: Patient): PatientDto
 
-    suspend fun loginPatient(phoneNumber: String, password: String): Boolean
+    suspend fun loginPatient(phoneNumber: String, password: String): LoginDto
 
     suspend fun updatePatient(patient: Patient): Boolean
 

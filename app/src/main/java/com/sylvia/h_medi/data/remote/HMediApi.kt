@@ -1,9 +1,6 @@
 package com.sylvia.h_medi.data.remote
 
-import com.sylvia.h_medi.data.remote.dto.AppointmentDto
-import com.sylvia.h_medi.data.remote.dto.DoctorDto
-import com.sylvia.h_medi.data.remote.dto.PatientDto
-import com.sylvia.h_medi.data.remote.dto.SpecialistDto
+import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
 import com.sylvia.h_medi.domain.model.Patient
 import retrofit2.http.*
@@ -25,7 +22,7 @@ interface HMediApi {
     suspend fun login(
         @Body phoneNumber: String,
         @Body password: String
-    ): Boolean
+    ): LoginDto
 
 
 
