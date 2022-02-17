@@ -18,16 +18,18 @@ interface HMediApi {
         @Field("password") password: String
     ): PatientDto
 
+    @FormUrlEncoded
     @PUT("patients/{patientId}")
     suspend fun updatePatient(
         @Path("patientId") patientId: Int,
         @Body patient: Patient
     ): Boolean
 
+    @FormUrlEncoded
     @POST("login")
     suspend fun login(
-        @Body phoneNumber: String,
-        @Body password: String
+        @Field("phone_number") phoneNumber: String,
+        @Field("password") password: String
     ): LoginDto
 
 

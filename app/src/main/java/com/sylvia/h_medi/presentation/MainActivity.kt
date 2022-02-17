@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sylvia.h_medi.presentation.ui.doctorList.DoctorListScreen
 import com.sylvia.h_medi.presentation.ui.register.RegisterScreen
 import com.sylvia.h_medi.presentation.ui.theme.HMediTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,13 +24,19 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = Screen.RegisterScreen.route
+                startDestination = Screen.DoctorListScreen.route
             ) {
 
                 composable(
                     route = Screen.RegisterScreen.route
                 ) {
                     RegisterScreen()
+                }
+
+                composable(
+                    route = Screen.DoctorListScreen.route
+                ) {
+                    DoctorListScreen()
                 }
 
             }
