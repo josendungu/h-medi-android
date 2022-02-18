@@ -11,6 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sylvia.h_medi.presentation.ui.appointmentDetail.AppointmentDetailScreen
+import com.sylvia.h_medi.presentation.ui.appointmentList.AppointmentListScreen
+import com.sylvia.h_medi.presentation.ui.doctorDetail.DoctorDetailScreen
 import com.sylvia.h_medi.presentation.ui.doctorList.DoctorListScreen
 import com.sylvia.h_medi.presentation.ui.register.RegisterScreen
 import com.sylvia.h_medi.presentation.ui.theme.HMediTheme
@@ -37,6 +40,24 @@ class MainActivity : ComponentActivity() {
                     route = Screen.DoctorListScreen.route
                 ) {
                     DoctorListScreen()
+                }
+
+                composable(
+                    route = Screen.DoctorDetailScreen.route
+                ) {
+                    DoctorDetailScreen()
+                }
+
+                composable(
+                    route = Screen.AppointmentListScreen.route
+                ) {
+                    AppointmentListScreen()
+                }
+
+                composable(
+                    route = Screen.AppointmentDetailScreen.route
+                ) {
+                    AppointmentDetailScreen()
                 }
 
             }
