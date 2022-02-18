@@ -22,11 +22,11 @@ interface HMediRepository {
 
     suspend fun getAppointmentDetails(appointmentId: Int): AppointmentDto
 
-    suspend fun createAppointment(appointment: Appointment): AppointmentDto
+    suspend fun createAppointment(appointment: Appointment, patientId: Int): AppointmentDto
 
     suspend fun deleteAppointment(appointmentId: Int): Boolean
 
-    suspend fun updateAppointment(appointment: Appointment): Boolean
+    suspend fun updateAppointment(appointment: Appointment, patientId: Int): Boolean
 
     suspend fun getSpecialistList(): List<SpecialistDto>
 

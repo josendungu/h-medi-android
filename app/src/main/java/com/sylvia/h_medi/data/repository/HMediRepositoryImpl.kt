@@ -12,11 +12,11 @@ class HMediRepositoryImpl @Inject constructor(
 ): HMediRepository {
     override suspend fun registerPatient(patient: Patient): PatientDto {
         return api.registerPatient(
-            patient.firstName,
-            patient.lastName,
-            patient.phoneNumber,
-            patient.gender,
-            patient.password!!
+            firstName = patient.firstName,
+            lastName = patient.lastName,
+            phoneNumber = patient.phoneNumber,
+            gender = patient.gender,
+            password = patient.password!!
         )
     }
 
@@ -48,16 +48,27 @@ class HMediRepositoryImpl @Inject constructor(
         return  api.getAppointmentDetails(appointmentId)
     }
 
-    override suspend fun createAppointment(appointment: Appointment): AppointmentDto {
-        return api.addAppointment(appointment)
+    override suspend fun createAppointment(appointment: Appointment, patientId: Int): AppointmentDto {
+        return api.addAppointment(
+            date = appointment.date,
+            time = appointment.time,
+            patientId = patientId,
+            doctorId = appointment.doctor.doctorId
+        )
     }
 
     override suspend fun deleteAppointment(appointmentId: Int): Boolean {
         return api.deleteAppointment(appointmentId)
     }
 
-    override suspend fun updateAppointment(appointment: Appointment): Boolean {
-        return api.updateAppointment(appointment.appointmentId, appointment)
+    override suspend fun updateAppointment(appointment: Appointment, patientId: Int): Boolean {
+        return api.updateAppointment(
+            appointmentId = appointment.appointmentId,
+            date = appointment.date,
+            time = appointment.time,
+            patientId = patientId,
+            doctorId = appointment.doctor.doctorId
+        )
     }
 
     override suspend fun getSpecialistList(): List<SpecialistDto> {

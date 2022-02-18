@@ -61,20 +61,28 @@ interface HMediApi {
         @Path("appointmentId") appointmentId: Int
     ): AppointmentDto
 
+    @FormUrlEncoded
     @POST("appointments")
     suspend fun addAppointment(
-        @Body appointment: Appointment
+        @Field("date") date: Int,
+        @Field("time") time: String,
+        @Field("patient_id") patientId: Int,
+        @Field("doctor_id") doctorId: Int
     ): AppointmentDto
 
     @DELETE("appointments/{appointmentId}")
     suspend fun deleteAppointment(
-        @Path("appointmentId") appointmentId: Int
+        @Path("appointmentId") appointmentId: Int,
     ): Boolean
 
+    @FormUrlEncoded
     @PUT("appointments/{appointmentId}")
     suspend fun updateAppointment(
         @Path("appointmentId") appointmentId: Int,
-        @Body appointment: Appointment
+        @Field("date") date: Int,
+        @Field("time") time: String,
+        @Field("patient_id") patientId: Int,
+        @Field("doctor_id") doctorId: Int
     ): Boolean
 
 
