@@ -1,4 +1,4 @@
-package com.sylvia.h_medi.presentation.ui.appointmentDetail
+package com.sylvia.h_medi.presentation.ui.bookAppointment
 
 import androidx.compose.runtime.Composable
 

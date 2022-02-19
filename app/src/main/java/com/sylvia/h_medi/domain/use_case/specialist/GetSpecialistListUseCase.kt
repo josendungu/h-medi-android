@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetSpecialistList @Inject constructor(
+class GetSpecialistListUseCase @Inject constructor(
     private val repository: HMediRepository
 ) {
 

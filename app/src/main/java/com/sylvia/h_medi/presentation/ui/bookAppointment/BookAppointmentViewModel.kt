@@ -1,4 +1,4 @@
-package com.sylvia.h_medi.presentation.ui.appointmentDetail
+package com.sylvia.h_medi.presentation.ui.bookAppointment
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class AppointmentDetailViewModel @Inject constructor(
+class BookAppointmentViewModel @Inject constructor(
     private val getAppointmentDetailUseCase: GetAppointmentDetailUseCase
 ): ViewModel() {
 
-    private val _state = mutableStateOf(AppointmentDetailState())
-    val state: State<AppointmentDetailState> = _state
+    private val _state = mutableStateOf(BookAppointmantState())
+    val state: State<BookAppointmantState> = _state
 
     init {
         getAppointmentList()
@@ -28,15 +28,15 @@ class AppointmentDetailViewModel @Inject constructor(
 
             when (it) {
                 is Resource.Success -> {
-                    _state.value = AppointmentDetailState(appointment = it.data)
+                    _state.value = BookAppointmantState(appointment = it.data)
                 }
 
                 is Resource.Error -> {
-                    _state.value = AppointmentDetailState(error = it.message ?: "An unexpected error occurred")
+                    _state.value = BookAppointmantState(error = it.message ?: "An unexpected error occurred")
                 }
 
                 is Resource.Loading -> {
-                    _state.value = AppointmentDetailState(isLoading = true)
+                    _state.value = BookAppointmantState(isLoading = true)
                 }
             }
 

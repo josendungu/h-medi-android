@@ -10,13 +10,14 @@ import androidx.compose.ui.graphics.Color
 private val ColorPalette = lightColors(
     primary = Blue,
     secondary = Color.White,
-    onPrimary = Color.White
+    onPrimary = Color.White,
+    background = Background
 )
 
 
 
 @Composable
-fun HMediTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun HMediTheme(content: @Composable() () -> Unit) {
 
     MaterialTheme(
         colors = ColorPalette,
