@@ -1,6 +1,7 @@
 package com.sylvia.h_medi.di
 
 import com.sylvia.h_medi.common.Constants
+import com.sylvia.h_medi.common.utils.Navigator
 import com.sylvia.h_medi.data.remote.HMediApi
 import com.sylvia.h_medi.data.repository.HMediRepositoryImpl
 import com.sylvia.h_medi.domain.repository.HMediRepository
@@ -31,5 +32,12 @@ object AppModule {
     @Singleton
     fun provideHMediRepository(api: HMediApi): HMediRepository {
         return HMediRepositoryImpl(api)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideNavigator(): Navigator {
+        return Navigator()
     }
 }

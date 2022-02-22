@@ -19,6 +19,7 @@ interface HMediApi {
     ): PatientDto
 
     @FormUrlEncoded
+    @Headers("Accept: application/json")
     @PUT("patients/{patientId}")
     suspend fun updatePatient(
         @Path("patientId") patientId: Int,
@@ -26,6 +27,7 @@ interface HMediApi {
     ): Boolean
 
     @FormUrlEncoded
+    @Headers("Accept: application/json")
     @POST("login")
     suspend fun login(
         @Field("phone_number") phoneNumber: String,
@@ -62,6 +64,7 @@ interface HMediApi {
     ): AppointmentDto
 
     @FormUrlEncoded
+    @Headers("Accept: application/json")
     @POST("appointments")
     suspend fun addAppointment(
         @Field("date") date: Int,
@@ -76,6 +79,7 @@ interface HMediApi {
     ): Boolean
 
     @FormUrlEncoded
+    @Headers("Accept: application/json")
     @PUT("appointments/{appointmentId}")
     suspend fun updateAppointment(
         @Path("appointmentId") appointmentId: Int,

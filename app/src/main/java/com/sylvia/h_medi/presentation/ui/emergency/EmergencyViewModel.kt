@@ -2,7 +2,10 @@ package com.sylvia.h_medi.presentation.ui.emergency
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 @HiltViewModel
-class EmergencyViewModel(): ViewModel() {
+class EmergencyViewModel @Inject constructor(
+
+): ViewModel() {
 }

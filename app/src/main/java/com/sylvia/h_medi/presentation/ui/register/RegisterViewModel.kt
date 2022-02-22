@@ -30,7 +30,8 @@ class RegisterViewModel @Inject constructor(
             patientId = null
         )
 
-        registerPatient(patient)
+        state.value.patient = patient
+
     }
 
     private fun registerPatient(patient: Patient) {
