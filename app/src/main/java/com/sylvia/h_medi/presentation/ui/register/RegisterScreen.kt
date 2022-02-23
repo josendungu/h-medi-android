@@ -18,8 +18,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sylvia.h_medi.R
-import com.sylvia.h_medi.presentation.Screen
-import com.sylvia.h_medi.presentation.ui.theme.Blue
+import com.sylvia.h_medi.presentation.ui.theme.MyBlue
 import com.sylvia.h_medi.presentation.ui.theme.GreyLine
 import com.sylvia.h_medi.presentation.ui.theme.HMediTheme
 import com.sylvia.h_medi.presentation.ui.theme.Typography
@@ -65,7 +64,7 @@ fun RegisterScreen(
                     Image(
                         painterResource(R.drawable.ic_logo),
                         contentDescription = "",
-                        colorFilter = ColorFilter.tint(Blue),
+                        colorFilter = ColorFilter.tint(MyBlue),
                         modifier = Modifier
                             .height(40.dp)
                             .width(40.dp)
@@ -74,7 +73,7 @@ fun RegisterScreen(
                     Text(
                         text = "H-Medi",
                         style = Typography.h2,
-                        color = Blue
+                        color = MyBlue
                     )
                 }
 
@@ -95,7 +94,7 @@ fun RegisterScreen(
                     Text(
                         text = "Please fill in the details below to register",
                         style = Typography.h5,
-                        color = Blue,
+                        color = MyBlue,
                         textAlign = TextAlign.Left,
                         modifier = Modifier.fillMaxWidth()
                     )

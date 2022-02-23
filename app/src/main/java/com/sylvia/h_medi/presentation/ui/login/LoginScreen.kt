@@ -5,18 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -24,8 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sylvia.h_medi.presentation.ui.theme.HMediTheme
 import com.sylvia.h_medi.R
-import com.sylvia.h_medi.presentation.Screen
-import com.sylvia.h_medi.presentation.ui.theme.Blue
+import com.sylvia.h_medi.presentation.ui.theme.MyBlue
 import com.sylvia.h_medi.presentation.ui.theme.GreyLine
 import com.sylvia.h_medi.presentation.ui.theme.Typography
 
@@ -64,7 +59,7 @@ fun LoginScreen(
                 Image(
                     painterResource(R.drawable.ic_logo),
                     contentDescription = "",
-                    colorFilter = ColorFilter.tint(Blue),
+                    colorFilter = ColorFilter.tint(MyBlue),
                     modifier = Modifier
                         .height(40.dp)
                         .width(40.dp)
@@ -73,7 +68,7 @@ fun LoginScreen(
                 Text(
                     text = "H-Medi",
                     style = Typography.h2,
-                    color = Blue
+                    color = MyBlue
                 )
             }
 
@@ -95,7 +90,7 @@ fun LoginScreen(
                 Text(
                     text = "Please fill in the details below to login",
                     style = Typography.h5,
-                    color = Blue,
+                    color = MyBlue,
                     textAlign = TextAlign.Left,
                     modifier = Modifier.fillMaxWidth()
                 )

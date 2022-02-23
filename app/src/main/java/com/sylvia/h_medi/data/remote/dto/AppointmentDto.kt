@@ -1,21 +1,24 @@
 package com.sylvia.h_medi.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
+import com.sylvia.h_medi.common.utils.DateUtils
 import com.sylvia.h_medi.domain.model.Appointment
 
 data class AppointmentDto(
     val time: String,
-    val date: Int,
+    val date: Long,
     val doctor: DoctorDto,
     @SerializedName("id")
-    val appointmentId: Int
+    val appointmentId: Int,
+    val specialist: String
 )
 
 fun AppointmentDto.toAppointment(): Appointment{
     return Appointment(
         time = time,
-        date = date,
+        date = DateUtils.longToDate(date),
         doctor = doctor.toDoctor(),
-        appointmentId = appointmentId
+        appointmentId = appointmentId,
+        specialist = specialist
     )
 }

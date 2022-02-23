@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sylvia.h_medi.presentation.Screen
+import com.sylvia.h_medi.presentation.ui.theme.MyBlue
 
 @Composable
 fun CustomBottomNavigation(
@@ -47,7 +48,7 @@ fun CustomBottomNavigation(
 @Composable
 fun CustomBottomNavItem(item: BottomNavScreen, isSelected: Boolean, onClick: ()->Unit) {
 
-    val background = if (isSelected) MaterialTheme.colors.primary else Color.Transparent
+    val background = if (isSelected) MyBlue else Color.Transparent
     val contentColor = if (isSelected) Color.White else MaterialTheme.colors.onBackground
 
     Box(
@@ -65,7 +66,11 @@ fun CustomBottomNavItem(item: BottomNavScreen, isSelected: Boolean, onClick: ()-
             Icon(imageVector = item.icon, contentDescription = null, tint = contentColor)
             
             AnimatedVisibility(visible = isSelected) {
-                Text(text = item.title, color = contentColor)
+                Text(
+                    text = item.title,
+                    color = contentColor,
+                    modifier = Modifier.padding(horizontal = 3.dp)
+                )
             }
         }
 

@@ -7,7 +7,7 @@ import java.util.*
 object DateUtils {
 
     // Ex: November 4, 2021
-    private val sdf = SimpleDateFormat("MMMMM d, yyyy")
+    private val sdf = SimpleDateFormat("d MMMM")
 
     fun longToDate(long: Long): Date {
         return Date(long)

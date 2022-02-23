@@ -1,9 +1,12 @@
 package com.sylvia.h_medi.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sylvia.h_medi.common.Constants.TAG
 import com.sylvia.h_medi.common.Resource
 import com.sylvia.h_medi.common.utils.Navigator
+import com.sylvia.h_medi.domain.model.Patient
 import com.sylvia.h_medi.domain.use_case.doctor.LoadDoctorsUseCase
 import com.sylvia.h_medi.domain.use_case.patient.LoadLoggedInPatientUseCase
 import com.sylvia.h_medi.domain.use_case.specialist.LoadSpecialistsUseCase

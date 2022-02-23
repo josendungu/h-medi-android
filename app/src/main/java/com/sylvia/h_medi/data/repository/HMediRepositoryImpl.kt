@@ -1,5 +1,6 @@
 package com.sylvia.h_medi.data.repository
 
+import com.sylvia.h_medi.common.utils.DateUtils
 import com.sylvia.h_medi.data.remote.HMediApi
 import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
@@ -50,7 +51,7 @@ class HMediRepositoryImpl @Inject constructor(
 
     override suspend fun createAppointment(appointment: Appointment, patientId: Int): AppointmentDto {
         return api.addAppointment(
-            date = appointment.date,
+            date = DateUtils.dateToLong(appointment.date),
             time = appointment.time,
             patientId = patientId,
             doctorId = appointment.doctor.doctorId
@@ -64,7 +65,7 @@ class HMediRepositoryImpl @Inject constructor(
     override suspend fun updateAppointment(appointment: Appointment, patientId: Int): Boolean {
         return api.updateAppointment(
             appointmentId = appointment.appointmentId,
-            date = appointment.date,
+            date = DateUtils.dateToLong(appointment.date),
             time = appointment.time,
             patientId = patientId,
             doctorId = appointment.doctor.doctorId

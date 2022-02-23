@@ -67,7 +67,7 @@ interface HMediApi {
     @Headers("Accept: application/json")
     @POST("appointments")
     suspend fun addAppointment(
-        @Field("date") date: Int,
+        @Field("date") date: Long,
         @Field("time") time: String,
         @Field("patient_id") patientId: Int,
         @Field("doctor_id") doctorId: Int
@@ -83,7 +83,7 @@ interface HMediApi {
     @PUT("appointments/{appointmentId}")
     suspend fun updateAppointment(
         @Path("appointmentId") appointmentId: Int,
-        @Field("date") date: Int,
+        @Field("date") date: Long,
         @Field("time") time: String,
         @Field("patient_id") patientId: Int,
         @Field("doctor_id") doctorId: Int
