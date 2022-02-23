@@ -34,7 +34,7 @@ fun LoginScreen(
     viewModel: LoginViewModel =  hiltViewModel(),
     navController: NavController
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
 
     var passwordVisibility by remember { mutableStateOf(false) }
 
@@ -156,7 +156,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.padding(5.dp))
 
                 Button(
-                    onClick = { viewModel.navigateToRegister() },
+                    onClick = { viewModel.handleLoginButtonClick() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
@@ -178,7 +178,7 @@ fun LoginScreen(
                         end.linkTo(parent.end, margin = 10.dp)
                     }
                     .clickable {
-                        navController.navigate(Screen.RegisterScreen.route)
+                        viewModel.navigateToRegister()
                     },
                 verticalArrangement = Arrangement.Center
             ) {
@@ -197,9 +197,27 @@ fun LoginScreen(
 
             }
 
-
-
         }
+
+        if (state.value.error.isNotBlank()) {
+            Snackbar(
+                modifier = Modifier.padding(8.dp)
+            ) { Text(text = state.value.error) }
+        }
+
+        if (state.value.errorResponse.isNotBlank()){
+            Snackbar(
+                modifier = Modifier.padding(8.dp)
+            ) { Text(text = state.value.errorResponse) }
+        }
+
+        if (state.value.isLoading){
+            Snackbar(
+                modifier = Modifier.padding(8.dp)
+            ) { Text(text = "Loading... Please wait.") }
+        }
+
+
 
     }
 

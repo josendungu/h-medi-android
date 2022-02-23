@@ -284,21 +284,15 @@ fun RegisterScreen(
             }
 
 
-
-
             if (state.value.error.isNotBlank()) {
-                Text(
-                    text = state.value.error,
-                    color = MaterialTheme.colors.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .align(Alignment.Center)
-                )
+                Snackbar(
+                    modifier = Modifier.padding(8.dp)
+                ) { Text(text = state.value.error) }
             }
             if (state.value.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Snackbar(
+                    modifier = Modifier.padding(8.dp)
+                ) { Text(text = "Loading... Please Wait") }
             }
 
         }

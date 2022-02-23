@@ -7,8 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.sylvia.h_medi.common.Resource
 import com.sylvia.h_medi.common.utils.Navigator
 import com.sylvia.h_medi.domain.model.Login
+import com.sylvia.h_medi.domain.model.Patient
+import com.sylvia.h_medi.domain.use_case.patient.AddLoggedInPatientUseCase
 import com.sylvia.h_medi.domain.use_case.patient.LoginUseCase
 import com.sylvia.h_medi.presentation.Screen
+import com.sylvia.h_medi.presentation.ui.register.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    private val addLoggedInPatientUseCase: AddLoggedInPatientUseCase,
     private val navigator: Navigator
 ): ViewModel() {
 
@@ -50,13 +54,35 @@ class LoginViewModel @Inject constructor(
 
     }
 
+
+    fun handleLoginButtonClick() {
+
+        state.value.errorResponse = ""
+
+        if (phoneNumberText.value.isBlank()){
+            _state.value = LoginState(errorResponse = "Please enter your phone number.")
+            return
+        }
+
+        if (passwordText.value.isBlank()){
+            _state.value = LoginState(errorResponse = "Please enter your password.")
+            return
+        }
+
+        requestLogin(phoneNumberText.value, passwordText.value)
+
+    }
+
     private fun checkLoginResponse(login: Login?) {
         if (login != null){
 
             if (login.success){
-                handleSuccess()
+                val patient = login.patient
+
+                addPatient(patient!!)
+
             } else {
-                _state.value = LoginState(errorResponse = login.errorMessage)
+                _state.value = LoginState(errorResponse = login.errorMessage ?: "An unexpected error occurred")
             }
 
         } else {
@@ -64,9 +90,25 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun handleSuccess() {
-        //save the patient details and navigate to Home Screen
+    private fun addPatient(patient: Patient) {
+        addLoggedInPatientUseCase.invoke(patient = patient).onEach {
+            when (it) {
+                is Resource.Success -> {
+                    navigator.navigateTo(Screen.HomeScreen)
+                }
+
+                is Resource.Error -> {
+                    _state.value = LoginState(error = it.message ?: "An unexpected error occurred")
+
+                }
+
+                is Resource.Loading -> {
+                    _state.value = LoginState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
+
 
     fun navigateToRegister(){
         navigator.navigateTo(Screen.RegisterScreen)

@@ -10,8 +10,10 @@ import com.sylvia.h_medi.common.Resource
 import com.sylvia.h_medi.common.utils.Navigator
 import com.sylvia.h_medi.domain.model.Login
 import com.sylvia.h_medi.domain.model.Patient
+import com.sylvia.h_medi.domain.use_case.patient.AddLoggedInPatientUseCase
 import com.sylvia.h_medi.domain.use_case.patient.RegisterPatientUseCase
 import com.sylvia.h_medi.presentation.Screen
+import com.sylvia.h_medi.presentation.ui.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerPatientUseCase: RegisterPatientUseCase,
+    private val addLoggedInPatientUseCase: AddLoggedInPatientUseCase,
     private val navigator: Navigator
 ): ViewModel() {
 
@@ -56,7 +59,7 @@ class RegisterViewModel @Inject constructor(
                     val result: Patient? = it.data
 
                     if (result !=  null){
-                        //save the patient details and navigate to home
+                        addPatient(result)
                     } else {
                         _state.value = RegisterState(validateError = "An unexpected error occurred while creating your account. Please try again later")
                     }
@@ -75,20 +78,29 @@ class RegisterViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+
+    private fun addPatient(patient: Patient) {
+        addLoggedInPatientUseCase.invoke(patient = patient).onEach {
+            when (it) {
+                is Resource.Success -> {
+                    navigator.navigateTo(Screen.HomeScreen)
+                }
+
+                is Resource.Error -> {
+                    _state.value = RegisterState(error = it.message ?: "An unexpected error occurred")
+
+                }
+
+                is Resource.Loading -> {
+                    _state.value = RegisterState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun onRegisterButtonClicked() {
 
         state.value.validateError = ""
-        Log.d(TAG, "onRegisterButtonClicked: ${passwordText.value}")
-
-        if (passwordText.value.isBlank()){
-            _state.value = RegisterState(validateError = "Please enter your password.")
-            return
-        }
-
-        if (confirmPasswordText.value.isBlank()){
-            _state.value = RegisterState(validateError = "Please confirm your password.")
-            return
-        }
 
         if (firstNameText.value.isBlank()){
             _state.value = RegisterState(validateError = "Please enter your first name.")
@@ -108,6 +120,18 @@ class RegisterViewModel @Inject constructor(
             _state.value = RegisterState(validateError = "Please enter your gender.")
             return
         }
+
+        if (passwordText.value.isBlank()){
+            _state.value = RegisterState(validateError = "Please enter your password.")
+            return
+        }
+
+        if (confirmPasswordText.value.isBlank()){
+            _state.value = RegisterState(validateError = "Please confirm your password.")
+            return
+        }
+
+
 
         if (passwordText.value == confirmPasswordText.value){
             val patient = Patient(

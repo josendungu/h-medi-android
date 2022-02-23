@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sylvia.h_medi.cache.model.DoctorEntity
 import com.sylvia.h_medi.cache.model.PatientEntity
+import com.sylvia.h_medi.cache.model.SpecialistEntity
 import com.sylvia.h_medi.domain.model.Specialist
 
 
@@ -15,11 +16,16 @@ interface HMediDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPatient(patientEntity: PatientEntity): Long
 
+    @Query("""
+        SELECT * FROM patients LIMIT 1
+        """)
+    suspend fun getPatient(): PatientEntity?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertDoctors(doctorEntity: List<DoctorEntity>): LongArray
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSpecialists(doctorEntity: List<Specialist>): LongArray
+    suspend fun insertSpecialists(specialistsEntity: List<SpecialistEntity>): LongArray
 
     @Query("SELECT * FROM doctors WHERE id = :id")
     suspend fun getDoctorById(id: Int): DoctorEntity
@@ -49,6 +55,16 @@ interface HMediDao {
         WHERE specialist_id = :specialistId
         """)
     suspend fun getDoctorsBySpeciality(specialistId:Int): List<DoctorEntity>
+
+    @Query("""
+        SELECT * FROM specialists
+        """)
+    suspend fun getAllSpecialists(): List<SpecialistEntity>
+
+    @Query("""
+        DELETE FROM patients
+        """)
+    suspend fun deleteAllPatients()
 
 
 

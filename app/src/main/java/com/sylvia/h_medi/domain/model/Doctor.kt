@@ -1,5 +1,7 @@
 package com.sylvia.h_medi.domain.model
 
+import com.sylvia.h_medi.cache.model.DoctorEntity
+
 
 data class Doctor(
     val about: String,
@@ -13,3 +15,18 @@ data class Doctor(
     val rating: Int,
     val specialistId: Int
 )
+
+fun Doctor.toDoctorEntity(): DoctorEntity{
+    return DoctorEntity(
+        featured_image = imageUrl,
+        firstName = firstName,
+        lastName = lastName,
+        id = doctorId,
+        about = about,
+        gender = gender,
+        phoneNumber = phoneNumber,
+        rating = rating,
+        specialistId = specialistId,
+        email = email
+    )
+}
