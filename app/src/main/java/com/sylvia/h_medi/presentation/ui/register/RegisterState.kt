@@ -6,6 +6,7 @@ data class RegisterState(
 
     val isLoading: Boolean = false,
     val error: String = "",
-    var patient: Patient? = null
+    var patient: Patient? = null,
+    var validateError: String = ""
 
 )

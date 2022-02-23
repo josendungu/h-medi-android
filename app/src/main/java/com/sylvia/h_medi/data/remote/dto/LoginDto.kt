@@ -8,13 +8,13 @@ data class LoginDto(
     @SerializedName("error_message")
     val errorMessage: String,
     @SerializedName("patient")
-    val patientDto: PatientDto
+    val patientDto: PatientDto?
 )
 
 fun LoginDto.toLogin(): Login {
     return Login(
         success,
         errorMessage,
-        patientDto.toPatient()
+        patientDto?.toPatient()
     )
 }

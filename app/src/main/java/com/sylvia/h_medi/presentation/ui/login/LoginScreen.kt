@@ -91,6 +91,17 @@ fun LoginScreen(
                 horizontalAlignment = CenterHorizontally
             ) {
 
+
+                Text(
+                    text = "Please fill in the details below to login",
+                    style = Typography.h5,
+                    color = Blue,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.padding(10.dp))
+
                 OutlinedTextField(
                     value = viewModel.phoneNumberText.value,
                     onValueChange = { viewModel.setPhoneNumber(it)},
