@@ -13,7 +13,7 @@ data class Doctor(
     val lastName: String,
     val phoneNumber: String,
     val rating: Int,
-    val specialistId: Int
+    val specialist: String
 )
 
 fun Doctor.toDoctorEntity(): DoctorEntity{
@@ -26,7 +26,7 @@ fun Doctor.toDoctorEntity(): DoctorEntity{
         gender = gender,
         phoneNumber = phoneNumber,
         rating = rating,
-        specialistId = specialistId,
+        specialist = specialist,
         email = email
     )
 }

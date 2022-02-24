@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
+import com.sylvia.h_medi.common.Constants
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
@@ -38,7 +39,7 @@ fun loadPicture(
 
     Glide.with(LocalContext.current)
         .asBitmap()
-        .load(url)
+        .load("${Constants.BASE_IMAGE_URL}$url")
         .into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                 bitmapState.value = resource

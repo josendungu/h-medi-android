@@ -2,22 +2,17 @@ package com.sylvia.h_medi.domain.use_case.doctor
 
 import android.util.Log
 import com.sylvia.h_medi.cache.HMediDao
+import com.sylvia.h_medi.cache.model.toDoctor
 import com.sylvia.h_medi.common.Constants
 import com.sylvia.h_medi.common.Resource
-import com.sylvia.h_medi.data.remote.dto.toDoctor
-import com.sylvia.h_medi.data.remote.dto.toPatient
 import com.sylvia.h_medi.domain.model.Doctor
-import com.sylvia.h_medi.domain.model.Patient
-import com.sylvia.h_medi.domain.model.toDoctorEntity
-import com.sylvia.h_medi.domain.repository.HMediRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetDoctorsListUseCase @Inject constructor(
-    private val repository: HMediRepository,
+class GetTopRatedDoctors@Inject constructor(
     private val hMediDao: HMediDao
 ) {
 
@@ -25,9 +20,7 @@ class GetDoctorsListUseCase @Inject constructor(
 
         try {
             emit(Resource.Loading())
-            val doctors = repository.getDoctorList().map { it.toDoctor() }
-
-            hMediDao.insertDoctors(doctors.map { it.toDoctorEntity() })
+            val doctors = hMediDao.getHigRatingDoctors().map { it.toDoctor() }
 
             emit(Resource.Success<List<Doctor>>(doctors))
 

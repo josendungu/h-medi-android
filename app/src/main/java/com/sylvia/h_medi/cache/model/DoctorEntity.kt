@@ -33,8 +33,8 @@ data class DoctorEntity(
     @ColumnInfo(name = "rating")
     val rating: Int,
 
-    @ColumnInfo(name = "specialist_id")
-    val specialistId: Int,
+    @ColumnInfo(name = "specialist")
+    val specialist: String,
 
     @ColumnInfo(name = "email")
     val email: String,
@@ -52,6 +52,6 @@ fun DoctorEntity.toDoctor(): Doctor {
         lastName = lastName,
         phoneNumber = phoneNumber,
         rating = rating,
-        specialistId = specialistId
+        specialist = specialist
     )
 }

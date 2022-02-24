@@ -27,8 +27,8 @@ data class DoctorDto(
 
     val rating: Int,
 
-    @SerializedName("specialist_id")
-    val specialistId: Int
+    @SerializedName("specialist")
+    val specialist: SpecialistDto
 )
 
 
@@ -43,6 +43,6 @@ fun DoctorDto.toDoctor(): Doctor {
         imageUrl = imageUrl,
         phoneNumber = phoneNumber,
         rating = rating,
-        specialistId = specialistId
+        specialist = specialist.toSpecialist().specialistName
     )
 }

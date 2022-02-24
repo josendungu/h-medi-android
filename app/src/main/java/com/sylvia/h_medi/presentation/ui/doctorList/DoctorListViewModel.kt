@@ -5,8 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sylvia.h_medi.common.Resource
-import com.sylvia.h_medi.domain.use_case.doctor.GetDoctorsListUseCase
-import com.sylvia.h_medi.presentation.ui.register.RegisterState
+import com.sylvia.h_medi.domain.use_case.doctor.GetAllDoctorsListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DoctorListViewModel @Inject constructor(
-    private val getDoctorsListUseCase: GetDoctorsListUseCase
+    private val getDoctorsListUseCase: GetAllDoctorsListUseCase
 ): ViewModel() {
 
     private val _state = mutableStateOf(DoctorListState())

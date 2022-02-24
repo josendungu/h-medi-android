@@ -13,7 +13,7 @@ import com.sylvia.h_medi.domain.model.Specialist
 @Dao
 interface HMediDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPatient(patientEntity: PatientEntity): Long
 
     @Query("""
@@ -21,10 +21,10 @@ interface HMediDao {
         """)
     suspend fun getPatient(): PatientEntity?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDoctors(doctorEntity: List<DoctorEntity>): LongArray
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSpecialists(specialistsEntity: List<SpecialistEntity>): LongArray
 
     @Query("SELECT * FROM doctors WHERE id = :id")
@@ -52,9 +52,9 @@ interface HMediDao {
 
     @Query("""
         SELECT * FROM doctors
-        WHERE specialist_id = :specialistId
+        WHERE specialist = :specialist
         """)
-    suspend fun getDoctorsBySpeciality(specialistId:Int): List<DoctorEntity>
+    suspend fun getDoctorsBySpeciality(specialist:String): List<DoctorEntity>
 
     @Query("""
         SELECT * FROM specialists
