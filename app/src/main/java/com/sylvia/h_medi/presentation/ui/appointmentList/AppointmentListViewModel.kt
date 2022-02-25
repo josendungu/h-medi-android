@@ -54,7 +54,10 @@ class AppointmentListViewModel @Inject constructor(
     }
 
     fun navigateToAddAppointment() {
-        navigator.navigateTo(Screen.AppointmentDetailScreen)
+        val specialist = 0
+        val toAppointment = true
+        val params = listOf<String>( specialist.toString(), toAppointment.toString())
+        navigator.navigateTo(Screen.DoctorListScreen, params)
     }
 
     private fun getAppointmentList(patientId: Int) {

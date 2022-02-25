@@ -12,6 +12,7 @@ object Constants {
     const val BASE_IMAGE_URL  = "http://192.168.100.19:8000/"
     const val PARAM_TO_APPOINTMENT = "toAppointment"
     const val PARAM_SPECIALIST_ID = "specialistId"
+    const val PARAM_DOCTOR_ID= "doctorId"
 
 
 
