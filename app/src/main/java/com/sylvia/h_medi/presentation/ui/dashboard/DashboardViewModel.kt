@@ -137,11 +137,16 @@ class DashboardViewModel @Inject constructor(
 
 
     fun navigateToDoctorDetails(doctorId: Int) {
-        navigator.navigateTo(Screen.DoctorDetailScreen)
+        val params = listOf<String>( doctorId.toString())
+        navigator.navigateTo(Screen.DoctorDetailScreen, params)
     }
 
     fun navigateToDoctorList(specialistId: Int?) {
-        navigator.navigateTo(Screen.DoctorListScreen)
+        val specialist = specialistId ?: 0
+        val toAppointment = false
+        val params = listOf<String>( specialist.toString(), toAppointment.toString())
+
+        navigator.navigateTo(Screen.DoctorListScreen, params)
     }
 
 

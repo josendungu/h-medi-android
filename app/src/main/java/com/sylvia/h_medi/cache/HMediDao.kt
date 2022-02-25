@@ -56,10 +56,16 @@ interface HMediDao {
         """)
     suspend fun getDoctorsBySpeciality(specialist:String): List<DoctorEntity>
 
+    @Query("SELECT * FROM specialists WHERE id = :id")
+    suspend fun getSpecialistById(id: Int): SpecialistEntity?
+
+
     @Query("""
         SELECT * FROM specialists
         """)
     suspend fun getAllSpecialists(): List<SpecialistEntity>
+
+
 
     @Query("""
         DELETE FROM patients

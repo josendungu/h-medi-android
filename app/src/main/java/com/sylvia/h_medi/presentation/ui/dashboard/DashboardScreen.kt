@@ -118,7 +118,7 @@ fun DashboardScreen(
                                         top = 10.dp,
                                         bottom = 10.dp
                                     )
-                                    .clickable { },
+                                    .clickable { viewModel.navigateToDoctorList(specialist.specialist_id)},
                                 specialist = specialist
                             )
 
@@ -127,7 +127,7 @@ fun DashboardScreen(
                                 modifier = Modifier
                                     .fillMaxWidth(0.7f)
                                     .padding(10.dp)
-                                    .clickable { },
+                                    .clickable { viewModel.navigateToDoctorList(specialist.specialist_id) },
                                 specialist = specialist
                             )
                         }
@@ -167,7 +167,8 @@ fun DashboardScreen(
                         DashDoctorItem(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp, bottom = 10.dp, end = 20.dp, start = 20.dp),
+                                .padding(top = 10.dp, bottom = 10.dp, end = 20.dp, start = 20.dp)
+                                .clickable { viewModel.navigateToDoctorDetails(it.doctorId) },
                             doctor = it)
                     }
 

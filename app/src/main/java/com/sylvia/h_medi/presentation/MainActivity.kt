@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = "navigation"){
                 navigator.sharedFlow.onEach {
-                    navController.navigate(it.route)
+                    navController.navigate(it)
                 }.launchIn(this)
             }
 
@@ -69,13 +69,13 @@ class MainActivity : ComponentActivity() {
                 }
 
                 composable(
-                    route = Screen.DoctorListScreen.route
+                    route = Screen.DoctorListScreen.route + "/{specialistId}" + "/{toAppointment}"
                 ) {
                     DoctorListScreen()
                 }
 
                 composable(
-                    route = Screen.DoctorDetailScreen.route
+                    route = Screen.DoctorDetailScreen.route + "/{doctorId}"
                 ) {
                     DoctorDetailScreen()
                 }
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 composable(
-                    route = Screen.AppointmentDetailScreen.route
+                    route = Screen.AppointmentDetailScreen.route + "/{appointmentId}" + "/{doctorId}"
                 ) {
                     AppointmentDetailScreen()
                 }
