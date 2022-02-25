@@ -5,6 +5,7 @@ import com.sylvia.h_medi.data.remote.HMediApi
 import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
 import com.sylvia.h_medi.domain.model.Patient
+import com.sylvia.h_medi.domain.model.PatientUpdate
 import com.sylvia.h_medi.domain.repository.HMediRepository
 import javax.inject.Inject
 
@@ -25,8 +26,15 @@ class HMediRepositoryImpl @Inject constructor(
         return api.login(phoneNumber, password)
     }
 
-    override suspend fun updatePatient(patient: Patient): Boolean {
-        return api.updatePatient(patient.patientId!!,patient)
+    override suspend fun updatePatient(patient: PatientUpdate): PatientDto {
+        return api.updatePatient(
+            patientId = patient.patientId!!,
+            firstName = patient.firstName,
+            lastName = patient.lastName,
+            phoneNumber = patient.phoneNumber,
+            gender = patient.gender,
+            password = patient.password
+        )
     }
 
     override suspend fun getDoctorList(): List<DoctorDto> {

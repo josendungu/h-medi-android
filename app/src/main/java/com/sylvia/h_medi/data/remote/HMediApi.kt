@@ -23,8 +23,12 @@ interface HMediApi {
     @PUT("patients/{patientId}")
     suspend fun updatePatient(
         @Path("patientId") patientId: Int,
-        @Body patient: Patient
-    ): Boolean
+        @Field("first_name") firstName: String?,
+        @Field("last_name") lastName: String?,
+        @Field("phone_number") phoneNumber: String? ,
+        @Field("gender") gender: String? ,
+        @Field("password") password: String?
+    ): PatientDto
 
     @FormUrlEncoded
     @Headers("Accept: application/json")
