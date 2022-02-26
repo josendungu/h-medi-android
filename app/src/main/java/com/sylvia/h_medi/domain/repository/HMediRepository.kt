@@ -2,6 +2,7 @@ package com.sylvia.h_medi.domain.repository
 
 import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
+import com.sylvia.h_medi.domain.model.AppointmentUpdate
 import com.sylvia.h_medi.domain.model.Patient
 import com.sylvia.h_medi.domain.model.PatientUpdate
 
@@ -27,7 +28,7 @@ interface HMediRepository {
 
     suspend fun deleteAppointment(appointmentId: Int): Boolean
 
-    suspend fun updateAppointment(appointment: Appointment, patientId: Int): Boolean
+    suspend fun updateAppointment(appointment: AppointmentUpdate): Boolean
 
     suspend fun getSpecialistList(): List<SpecialistDto>
 

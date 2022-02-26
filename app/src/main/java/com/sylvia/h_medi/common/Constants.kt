@@ -13,6 +13,7 @@ object Constants {
     const val PARAM_TO_APPOINTMENT = "toAppointment"
     const val PARAM_SPECIALIST_ID = "specialistId"
     const val PARAM_DOCTOR_ID= "doctorId"
+    const val PARAM_APPOINTMENT_ID= "appointmentId"
 
 
 

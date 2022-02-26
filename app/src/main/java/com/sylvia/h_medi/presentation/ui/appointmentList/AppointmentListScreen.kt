@@ -70,7 +70,9 @@ fun AppointmentListScreen(
                 LazyColumn(modifier = Modifier.fillMaxSize()){
 
                     items(state.appointments) { appointment ->
-                        AppointmentItem(appointment)
+                        AppointmentItem(appointment){
+                            viewModel.navigateToAppointmentDetail(it)
+                        }
                     }
 
                 }

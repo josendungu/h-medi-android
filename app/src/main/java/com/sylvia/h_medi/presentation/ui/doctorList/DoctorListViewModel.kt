@@ -14,6 +14,7 @@ import com.sylvia.h_medi.domain.model.Doctor
 import com.sylvia.h_medi.domain.model.Specialist
 import com.sylvia.h_medi.domain.use_case.doctor.GetAllDoctorsListUseCase
 import com.sylvia.h_medi.domain.use_case.doctor.GetDoctorListBySpecialization
+import com.sylvia.h_medi.domain.use_case.doctor.GetDoctorSearchListUseCase
 import com.sylvia.h_medi.domain.use_case.specialist.GetSpecialistDetailsUSeCase
 import com.sylvia.h_medi.presentation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,7 @@ class DoctorListViewModel @Inject constructor(
     private val getDoctorsListUseCase: GetAllDoctorsListUseCase,
     private val getDoctorListBySpecialization: GetDoctorListBySpecialization,
     private val getSpecialistDetailsUSeCase: GetSpecialistDetailsUSeCase,
+    private val getDoctorSearchListUseCase: GetDoctorSearchListUseCase,
     savedStateHandle: SavedStateHandle,
     private val navigator: Navigator
 ): ViewModel() {
@@ -91,7 +93,7 @@ class DoctorListViewModel @Inject constructor(
     private fun getDoctorBySpeciality() {
 
         if (specialist.value != null) {
-            getDoctorListBySpecialization.invoke(specialist.value!!.specialist_id).onEach {
+            getDoctorListBySpecialization.invoke(specialist.value!!.specialistName).onEach {
                 when (it) {
                     is Resource.Success -> {
                         _state.value = DoctorListState()
@@ -139,6 +141,50 @@ class DoctorListViewModel @Inject constructor(
 
 
     fun handleSearch() {
+        doctors.value = emptyList()
+
+
+        if (specialist.value ==  null){
+            getDoctorSearchListUseCase.invoke(searchString.value).onEach {
+                when (it) {
+                    is Resource.Success -> {
+                        _state.value = DoctorListState()
+                        doctors.value = it.data ?: emptyList()
+
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = DoctorListState(error = it.message ?: "An unexpected error occurred")
+
+                    }
+
+                    is Resource.Loading -> {
+                        _state.value = DoctorListState(isLoading = true)
+                    }
+                }
+            }.launchIn(viewModelScope)
+        } else {
+            getDoctorSearchListUseCase.invoke(searchString.value, specialist.value!!.specialistName).onEach {
+                when (it) {
+                    is Resource.Success -> {
+                        _state.value = DoctorListState()
+                        doctors.value = it.data ?: emptyList()
+
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = DoctorListState(error = it.message ?: "An unexpected error occurred")
+
+                    }
+
+                    is Resource.Loading -> {
+                        _state.value = DoctorListState(isLoading = true)
+                    }
+                }
+            }.launchIn(viewModelScope)
+
+        }
+
 
     }
 

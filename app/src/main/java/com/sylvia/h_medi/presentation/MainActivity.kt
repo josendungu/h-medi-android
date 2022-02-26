@@ -89,7 +89,7 @@ class MainActivity : ComponentActivity() {
                 composable(
                     route = Screen.AppointmentDetailScreen.route + "/{appointmentId}" + "/{doctorId}"
                 ) {
-                    AppointmentDetailScreen()
+                    AppointmentDetailScreen(context = this@MainActivity)
                 }
 
             }

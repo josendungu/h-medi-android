@@ -5,6 +5,7 @@ import com.sylvia.h_medi.common.Constants
 import com.sylvia.h_medi.common.Resource
 import com.sylvia.h_medi.data.remote.dto.toDoctor
 import com.sylvia.h_medi.domain.model.Appointment
+import com.sylvia.h_medi.domain.model.AppointmentUpdate
 import com.sylvia.h_medi.domain.model.Doctor
 import com.sylvia.h_medi.domain.repository.HMediRepository
 import kotlinx.coroutines.flow.Flow
@@ -17,11 +18,11 @@ class UpdateAppointmentUseCase @Inject constructor(
     private val repository: HMediRepository
 ) {
 
-    operator fun invoke(appointment: Appointment, patientId: Int): Flow<Resource<Boolean>> = flow {
+    operator fun invoke(appointment: AppointmentUpdate): Flow<Resource<Boolean>> = flow {
 
         try {
             emit(Resource.Loading())
-            val isUpdated = repository.updateAppointment(appointment, patientId)
+            val isUpdated = repository.updateAppointment(appointment)
             emit(Resource.Success<Boolean>(isUpdated))
 
         } catch (e: HttpException) {

@@ -87,10 +87,9 @@ interface HMediApi {
     @PUT("appointments/{appointmentId}")
     suspend fun updateAppointment(
         @Path("appointmentId") appointmentId: Int,
-        @Field("date") date: Long,
-        @Field("time") time: String,
-        @Field("patient_id") patientId: Int,
-        @Field("doctor_id") doctorId: Int
+        @Field("date") date: Long?,
+        @Field("time") time: String?,
+        @Field("doctor_id") doctorId: Int?
     ): Boolean
 
 

@@ -15,13 +15,16 @@ import com.sylvia.h_medi.presentation.ui.theme.*
 
 
 @Composable
-fun AppointmentItem(appointment: Appointment) {
+fun AppointmentItem(
+    appointment: Appointment,
+    onClicked: (appointmentId: Int) -> Unit
+) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 10.dp)
-            .clickable { },
+            .clickable { onClicked(appointment.appointmentId) },
         shape = MaterialTheme.shapes.small,
         backgroundColor = Color.White,
         elevation = 7.dp,
@@ -116,7 +119,7 @@ fun AppointmentItem(appointment: Appointment) {
                 }
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onClicked(appointment.appointmentId) },
                     modifier = Modifier
                         .background(MyBlue)
                         .height(35.dp),

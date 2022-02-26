@@ -1,5 +1,7 @@
 package com.sylvia.h_medi.common.utils
 
+import android.util.Log
+import com.sylvia.h_medi.common.Constants.TAG
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -8,6 +10,7 @@ object DateUtils {
 
     // Ex: November 4, 2021
     private val sdf = SimpleDateFormat("d MMMM")
+    private val myFormat = SimpleDateFormat("dd MM YYYY")
 
     fun longToDate(long: Long): Date {
         return Date(long)
@@ -18,11 +21,17 @@ object DateUtils {
     }
 
     fun dateToString(date: Date): String{
+
         return sdf.format(date)
     }
 
     fun stringToDate(string: String): Date {
         return sdf.parse(string) ?:throw NullPointerException("Could not convert date string to Date object.")
+    }
+
+    fun longStringToDate(string: String): Date {
+        Log.d(TAG, "longStringToDate: ${myFormat.parse(string)}")
+        return myFormat.parse(string) ?:throw NullPointerException("Could not convert date string to Date object.")
     }
 
     fun createTimestamp(): Date{

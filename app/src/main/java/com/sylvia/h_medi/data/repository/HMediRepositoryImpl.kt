@@ -4,6 +4,7 @@ import com.sylvia.h_medi.common.utils.DateUtils
 import com.sylvia.h_medi.data.remote.HMediApi
 import com.sylvia.h_medi.data.remote.dto.*
 import com.sylvia.h_medi.domain.model.Appointment
+import com.sylvia.h_medi.domain.model.AppointmentUpdate
 import com.sylvia.h_medi.domain.model.Patient
 import com.sylvia.h_medi.domain.model.PatientUpdate
 import com.sylvia.h_medi.domain.repository.HMediRepository
@@ -70,13 +71,17 @@ class HMediRepositoryImpl @Inject constructor(
         return api.deleteAppointment(appointmentId)
     }
 
-    override suspend fun updateAppointment(appointment: Appointment, patientId: Int): Boolean {
+    override suspend fun updateAppointment(appointment: AppointmentUpdate): Boolean {
         return api.updateAppointment(
             appointmentId = appointment.appointmentId,
-            date = DateUtils.dateToLong(appointment.date),
+            date = (
+                    if (appointment.date == null){
+                        null
+                    } else {
+                        DateUtils.dateToLong(appointment.date!!)
+                    }),
             time = appointment.time,
-            patientId = patientId,
-            doctorId = appointment.doctor.doctorId
+            doctorId = appointment.doctor?.doctorId
         )
     }
 

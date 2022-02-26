@@ -14,16 +14,21 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetDoctorListBySpecialization @Inject constructor(
+class GetDoctorSearchListUseCase @Inject constructor(
     private val hMediDao: HMediDao
 ) {
 
-    operator fun invoke(specialist: String): Flow<Resource<List<Doctor>>> = flow {
+    operator fun invoke(searchString: String, specialist: String? = null): Flow<Resource<List<Doctor>>> = flow {
 
         try {
             emit(Resource.Loading())
-            val doctors = hMediDao.getDoctorsBySpeciality(specialist).map { it.toDoctor() }
-            emit(Resource.Success<List<Doctor>>(doctors))
+            if (specialist != null) {
+                val doctor = hMediDao.getDoctorsBySearchAndSpecialization(searchString, specialist).map { it.toDoctor() }
+                emit(Resource.Success<List<Doctor>>(doctor))
+            } else {
+                val doctor = hMediDao.getDoctorsBySearch(searchString).map { it.toDoctor() }
+                emit(Resource.Success<List<Doctor>>(doctor))
+            }
 
         } catch (e: HttpException) {
             emit(Resource.Error<List<Doctor>>(e.localizedMessage ?: "An unexpected error occurred"))

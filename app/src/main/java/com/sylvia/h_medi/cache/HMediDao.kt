@@ -52,6 +52,23 @@ interface HMediDao {
 
     @Query("""
         SELECT * FROM doctors
+        WHERE first_name LIKE '%' || :searchString || '%'
+        OR last_name LIKE '%' || :searchString || '%' 
+        """)
+    suspend fun getDoctorsBySearch(searchString: String): List<DoctorEntity>
+
+
+    @Query("""
+        SELECT * FROM doctors
+        WHERE first_name LIKE '%' || :searchString || '%'
+        OR last_name LIKE '%' || :searchString || '%' 
+        AND specialist = :specialist
+        """)
+    suspend fun getDoctorsBySearchAndSpecialization(searchString: String, specialist: String): List<DoctorEntity>
+
+
+    @Query("""
+        SELECT * FROM doctors
         WHERE specialist = :specialist
         """)
     suspend fun getDoctorsBySpeciality(specialist:String): List<DoctorEntity>
@@ -64,7 +81,6 @@ interface HMediDao {
         SELECT * FROM specialists
         """)
     suspend fun getAllSpecialists(): List<SpecialistEntity>
-
 
 
     @Query("""
