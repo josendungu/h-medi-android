@@ -93,8 +93,15 @@ interface HMediApi {
     ): Boolean
 
 
-
-
     @GET("specialists")
     suspend fun getSpecialists(): List<SpecialistDto>
+
+    @FormUrlEncoded
+    @Headers("Accept: application/json")
+    @POST("emergencies")
+    suspend fun addEmergency(
+        @Field("emergency_type") type: String,
+        @Field("description") description: String,
+        @Field("patient_id") patientId: Int
+    ): EmergencyDto
 }

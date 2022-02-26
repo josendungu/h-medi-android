@@ -3,10 +3,7 @@ package com.sylvia.h_medi.data.repository
 import com.sylvia.h_medi.common.utils.DateUtils
 import com.sylvia.h_medi.data.remote.HMediApi
 import com.sylvia.h_medi.data.remote.dto.*
-import com.sylvia.h_medi.domain.model.Appointment
-import com.sylvia.h_medi.domain.model.AppointmentUpdate
-import com.sylvia.h_medi.domain.model.Patient
-import com.sylvia.h_medi.domain.model.PatientUpdate
+import com.sylvia.h_medi.domain.model.*
 import com.sylvia.h_medi.domain.repository.HMediRepository
 import javax.inject.Inject
 
@@ -87,5 +84,13 @@ class HMediRepositoryImpl @Inject constructor(
 
     override suspend fun getSpecialistList(): List<SpecialistDto> {
         return api.getSpecialists()
+    }
+
+    override suspend fun addEmergency(emergency: Emergency): EmergencyDto {
+        return api.addEmergency(
+            description = emergency.description,
+            type = emergency.emergencyType,
+            patientId = emergency.patientId
+        )
     }
 }
