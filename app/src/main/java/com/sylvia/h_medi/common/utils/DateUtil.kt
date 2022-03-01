@@ -1,37 +1,49 @@
 package com.sylvia.h_medi.common.utils
 
-import android.util.Log
-import com.sylvia.h_medi.common.Constants.TAG
-import java.lang.NullPointerException
-import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 object DateUtils {
 
-    // Ex: November 4, 2021
-    private val sdf = SimpleDateFormat("d MMMM")
-    private val myFormat = SimpleDateFormat("dd MM YYYY")
-
-    fun longToDate(long: Long): Date {
-        return Date(long)
+    fun longToDate(long: Long): LocalDate {
+        return LocalDate.ofEpochDay(long)
     }
 
-    fun dateToLong(date: Date): Long {
-        return date.time / 1000 // return seconds
+    fun dateToLong(date: LocalDate): Long {
+        return date.toEpochDay()
     }
 
-    fun dateToString(date: Date): String{
-
-        return sdf.format(date)
+    fun dateToString(date: LocalDate): String{
+        val format = DateTimeFormatter.ofPattern("d MMMM yyyy")
+        return date.format(format)
     }
 
-    fun stringToDate(string: String): Date {
-        return sdf.parse(string) ?:throw NullPointerException("Could not convert date string to Date object.")
+    fun stringToDate(string: String): LocalDate {
+        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+        return LocalDate.parse(string, dateFormatter)
     }
 
-    fun longStringToDate(string: String): Date {
-        Log.d(TAG, "longStringToDate: ${myFormat.parse(string)}")
-        return myFormat.parse(string) ?:throw NullPointerException("Could not convert date string to Date object.")
+    fun stringToLong(string: String): Long {
+        val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+
+        return LocalDate.parse(string, dateFormatter)
+            .atStartOfDay(ZoneOffset.UTC)
+            .toInstant()
+            .toEpochMilli()
+    }
+
+
+    fun timeToString(time: LocalTime): String{
+        val format = DateTimeFormatter.ofPattern("H:mm")
+        return time.format(format)
+    }
+
+    fun stringToTime(string: String): LocalTime {
+        val dateFormatter = DateTimeFormatter.ofPattern("H:mm:ss")
+        return LocalTime.parse(string, dateFormatter)
     }
 
     fun createTimestamp(): Date{

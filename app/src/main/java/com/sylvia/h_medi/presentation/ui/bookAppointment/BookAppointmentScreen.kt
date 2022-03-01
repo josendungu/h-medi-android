@@ -34,6 +34,8 @@ import com.sylvia.h_medi.presentation.ui.theme.HMediTheme
 import com.sylvia.h_medi.presentation.ui.theme.MyBlue
 import com.sylvia.h_medi.presentation.ui.theme.Shapes
 import com.sylvia.h_medi.presentation.ui.theme.Typography
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 
@@ -58,7 +60,8 @@ fun AppointmentDetailScreen(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, theYear: Int, theMonth: Int, dayOfMonth: Int ->
-            viewModel.setDate.value = "$dayOfMonth ${theMonth+1} $theYear"
+            val date = LocalDate.of(theYear, theMonth, dayOfMonth)
+            viewModel.setDate.value = date
         }, year, month, day
     )
 
@@ -66,8 +69,10 @@ fun AppointmentDetailScreen(
     val timePickerDialog = TimePickerDialog(
         context,
         {_, hour : Int, minute: Int ->
-            viewModel.setTime.value = "$hour:$minute"
-        }, initHour, initMinute, true
+            val time = LocalTime.of(hour, minute)
+            viewModel.setTime.value = time
+        }, initHour, initMinute, false
+
     )
 
     HMediTheme {
@@ -93,17 +98,6 @@ fun AppointmentDetailScreen(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start
                     ) {
-
-
-                        Icon(
-                            Icons.Outlined.ArrowBack,
-                            contentDescription = "Search Icon",
-                            tint = Color.Black,
-                            modifier = Modifier.clickable {
-
-                            }
-                        )
-
 
                         Text(
                             text = if (!viewModel.isUpdate.value) {
@@ -140,7 +134,11 @@ fun AppointmentDetailScreen(
 
 
                         Text(
-                            text = "Appointment successfully booked",
+                            text = if (!viewModel.isUpdate.value) {
+                                "Appointment was successfully booked"
+                            } else {
+                                "Appointment was successfully updated "
+                            },
                             modifier = Modifier
                                 .padding(20.dp)
                                 .fillMaxWidth()
@@ -170,8 +168,8 @@ fun AppointmentDetailScreen(
                             )
 
                             Text(
-                                text = if (viewModel.setTime.value.isNotBlank()) {
-                                    viewModel.setTime.value
+                                text = if (viewModel.setTime.value != null) {
+                                    DateUtils.timeToString(viewModel.setTime.value!!)
                                 } else {
                                     "Time is not yet set"
                                 },
@@ -191,8 +189,8 @@ fun AppointmentDetailScreen(
                             )
 
                             Text(
-                                text = if (viewModel.setDate.value.isNotBlank()) {
-                                    viewModel.setDate.value
+                                text = if (viewModel.setDate.value != null) {
+                                    DateUtils.dateToString(viewModel.setDate.value!!)
                                 } else {
                                     "Date is not yet set"
                                 },
@@ -254,7 +252,7 @@ fun AppointmentDetailScreen(
                         }
                     } else {
                         Button(
-                            onClick = { viewModel.handleButtonClicked()},
+                            onClick = { viewModel.navigateToHome()},
                             modifier = Modifier
                                 .height(50.dp)
                                 .fillMaxWidth()

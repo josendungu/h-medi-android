@@ -15,7 +15,7 @@ data class AppointmentDto(
 
 fun AppointmentDto.toAppointment(): Appointment{
     return Appointment(
-        time = time,
+        time = DateUtils.stringToTime(time),
         date = DateUtils.longToDate(date),
         doctor = doctor.toDoctor(),
         appointmentId = appointmentId,

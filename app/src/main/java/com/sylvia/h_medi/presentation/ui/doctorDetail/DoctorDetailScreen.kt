@@ -31,7 +31,6 @@ fun DoctorDetailScreen(
 ) {
 
     val state = viewModel.state.value
-    val doctor = viewModel.currentDoctor.value
 
     HMediTheme {
 
@@ -73,97 +72,16 @@ fun DoctorDetailScreen(
                         elevation = 7.dp,
 
                     ) {
-
-                        Column(
-                            Modifier
-                                .fillMaxSize()
-                                .padding(20.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 5.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-
-                                Text(
-                                    text = "Dr. ${doctor!!.firstName}  ${doctor.lastName}",
-                                    style = Typography.h2,
-                                    textAlign = TextAlign.Center,
-                                    fontWeight = FontWeight.Bold
-                                )
-
-
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceEvenly
-                                ) {
-
-                                    IconButton(
-                                        onClick = {viewModel.emailToClipBoard()},
-                                        modifier = Modifier.alpha(ContentAlpha.medium)
-                                    ) {
-                                        Icon(
-                                            Icons.Outlined.Email,
-                                            contentDescription = "Search Icon",
-                                            tint = Color.Black
-                                        )
-                                    }
-
-                                    IconButton(
-                                        onClick = {viewModel.phoneToClipBoard()},
-                                        modifier = Modifier.alpha(ContentAlpha.medium)
-                                    ) {
-                                        Icon(
-                                            Icons.Outlined.Phone,
-                                            contentDescription = "Search Icon",
-                                            tint = Color.Black
-                                        )
-                                    }
-
-                                }
-
-                            }
-
-                            Text(
-                                text = doctor!!.specialist,
-                                style = Typography.h5
-                            )
-
-
-                            Rating(rating = doctor.rating)
-
-                            Divider(
-                                color = GreyLine,
-                                thickness = 1.dp,
-                                modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
-                            )
-
-                            Text(
-                                text = "About",
-                                style = Typography.h4,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-
-                            Text(
-                                text = doctor.about,
-                                style = Typography.body1,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-
-                            Button(
-                                onClick = { viewModel.makeAppointment() },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 10.dp, vertical = 30.dp)
-                                    .height(50.dp)
-                            ) {
-                                Text(
-                                    text = "Book Appointment",
-                                    style = Typography.h4
-                                )
-                            }
-                        }
+                        DoctorDetails(
+                            rating = viewModel.currentDoctor.value!!.rating,
+                            firstName = viewModel.currentDoctor.value!!.firstName,
+                            lastName = viewModel.currentDoctor.value!!.lastName,
+                            specialist = viewModel.currentDoctor.value!!.specialist,
+                            emailToClip = { viewModel.emailToClipBoard() },
+                            phoneToClip = { viewModel.phoneToClipBoard() },
+                            about = viewModel.currentDoctor.value!!.about,
+                            bookAppointment = { viewModel.makeAppointment() }
+                        )
 
                     }
                 }
@@ -221,6 +139,114 @@ fun Rating(rating: Int)  {
                         .height(13.dp)
                 )
             }
+        }
+    }
+
+}
+
+@Composable
+fun DoctorDetails(
+    rating: Int,
+    firstName: String,
+    lastName: String,
+    specialist: String,
+    emailToClip: () -> Unit,
+    phoneToClip: () -> Unit,
+    about: String,
+    bookAppointment: () -> Unit
+
+    ){
+
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = "Dr. $firstName  $lastName",
+                style = Typography.h2,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
+            )
+
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+
+                IconButton(
+                    onClick = {emailToClip()},
+                    modifier = Modifier.alpha(ContentAlpha.medium)
+                ) {
+                    Icon(
+                        Icons.Outlined.Email,
+                        contentDescription = "Email Icon",
+                        tint = Color.Black
+                    )
+                }
+
+                IconButton(
+                    onClick = {phoneToClip()},
+                    modifier = Modifier.alpha(ContentAlpha.medium)
+                ) {
+                    Icon(
+                        Icons.Outlined.Phone,
+                        contentDescription = "Phone Icon",
+                        tint = Color.Black
+                    )
+                }
+
+            }
+
+        }
+
+        Text(
+            text = specialist,
+            style = Typography.h5
+        )
+
+
+        Rating(rating = rating)
+
+        Divider(
+            color = GreyLine,
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+        )
+
+        Text(
+            text = "About",
+            style = Typography.h4,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Text(
+            text = about,
+            style = Typography.body1,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Button(
+            onClick = { bookAppointment() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp, vertical = 30.dp)
+                .height(50.dp)
+        ) {
+            Text(
+                text = "Book Appointment",
+                style = Typography.h4
+            )
         }
     }
 

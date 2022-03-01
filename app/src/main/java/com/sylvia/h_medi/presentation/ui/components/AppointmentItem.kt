@@ -67,7 +67,7 @@ fun AppointmentItem(
                         modifier = Modifier.padding(2.dp)
                     )
                     Text(
-                        text = appointment.time,
+                        text = DateUtils.timeToString(appointment.time),
                         style = Typography.body2,
                         modifier = Modifier.padding(2.dp)
                     )

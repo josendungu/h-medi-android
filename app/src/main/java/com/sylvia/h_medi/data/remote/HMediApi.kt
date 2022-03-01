@@ -90,7 +90,7 @@ interface HMediApi {
         @Field("date") date: Long?,
         @Field("time") time: String?,
         @Field("doctor_id") doctorId: Int?
-    ): Boolean
+    ): Int
 
 
     @GET("specialists")

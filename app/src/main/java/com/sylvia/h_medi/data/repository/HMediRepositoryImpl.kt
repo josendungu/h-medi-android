@@ -58,7 +58,7 @@ class HMediRepositoryImpl @Inject constructor(
     override suspend fun createAppointment(appointment: Appointment, patientId: Int): AppointmentDto {
         return api.addAppointment(
             date = DateUtils.dateToLong(appointment.date),
-            time = appointment.time,
+            time = DateUtils.timeToString(appointment.time),
             patientId = patientId,
             doctorId = appointment.doctor.doctorId
         )
@@ -68,7 +68,7 @@ class HMediRepositoryImpl @Inject constructor(
         return api.deleteAppointment(appointmentId)
     }
 
-    override suspend fun updateAppointment(appointment: AppointmentUpdate): Boolean {
+    override suspend fun updateAppointment(appointment: AppointmentUpdate): Int {
         return api.updateAppointment(
             appointmentId = appointment.appointmentId,
             date = (
@@ -77,7 +77,12 @@ class HMediRepositoryImpl @Inject constructor(
                     } else {
                         DateUtils.dateToLong(appointment.date!!)
                     }),
-            time = appointment.time,
+            time = (
+                    if (appointment.time == null){
+                        null
+                    } else {
+                        DateUtils.timeToString(appointment.time!!)
+                    }),
             doctorId = appointment.doctor?.doctorId
         )
     }

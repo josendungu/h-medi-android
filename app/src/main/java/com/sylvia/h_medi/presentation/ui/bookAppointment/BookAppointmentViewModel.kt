@@ -12,6 +12,7 @@ import com.sylvia.h_medi.common.Constants
 import com.sylvia.h_medi.common.Constants.TAG
 import com.sylvia.h_medi.common.Resource
 import com.sylvia.h_medi.common.utils.DateUtils
+import com.sylvia.h_medi.common.utils.Navigator
 import com.sylvia.h_medi.domain.model.Appointment
 import com.sylvia.h_medi.domain.model.AppointmentUpdate
 import com.sylvia.h_medi.domain.model.Doctor
@@ -21,10 +22,13 @@ import com.sylvia.h_medi.domain.use_case.appointment.GetAppointmentDetailUseCase
 import com.sylvia.h_medi.domain.use_case.appointment.UpdateAppointmentUseCase
 import com.sylvia.h_medi.domain.use_case.doctor.GetDoctorDetailUseCase
 import com.sylvia.h_medi.domain.use_case.patient.LoadLoggedInPatientUseCase
+import com.sylvia.h_medi.presentation.Screen
 import com.sylvia.h_medi.presentation.ui.profile.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
 
@@ -36,7 +40,7 @@ class BookAppointmentViewModel @Inject constructor(
     private val createAppointmentUseCase: CreateAppointmentUseCase,
     private val loadLoggedInPatientUseCase: LoadLoggedInPatientUseCase,
     private val updateAppointmentUseCase: UpdateAppointmentUseCase,
-    private val deleteAppointmentUseCase: DeleteAppointmentUseCase
+    private val navigator: Navigator
 ) : ViewModel(){
 
     private val _state = mutableStateOf(BookAppointmentState(isLoading = true))
@@ -45,8 +49,9 @@ class BookAppointmentViewModel @Inject constructor(
     val appointment = mutableStateOf<Appointment?>(null)
     private var doctorId: Int? = null
     val isUpdate = mutableStateOf(false)
-    val setTime = mutableStateOf("")
-    val setDate = mutableStateOf("")
+    val setTime = mutableStateOf<LocalTime?>(null)
+    val setDate = mutableStateOf<LocalDate?>(null)
+
 
 
     init {
@@ -76,7 +81,7 @@ class BookAppointmentViewModel @Inject constructor(
                     appointment.value = it.data
                     doctorId = it.data!!.doctor.doctorId
                     selectedDoctor.value = it.data.doctor
-                    setDate.value = DateUtils.dateToString(it.data.date)
+                    setDate.value = it.data.date
                     setTime.value = it.data.time
                     _state.value = BookAppointmentState()
                 }
@@ -126,24 +131,21 @@ class BookAppointmentViewModel @Inject constructor(
 
     }
 
-    fun navigateBack() {
-
-    }
 
     fun navigateToHome() {
-        TODO("Not yet implemented")
+        navigator.navigateTo(Screen.HomeScreen)
     }
 
     fun handleButtonClicked() {
 
         _state.value = BookAppointmentState()
 
-        if (setTime.value.isBlank()){
+        if (setTime.value == null){
             _state.value = BookAppointmentState(validateError = "Please set time.")
             return
         }
 
-        if (setDate.value.isBlank()){
+        if (setDate.value == null){
             _state.value = BookAppointmentState(validateError = "Please set date.")
             return
         }
@@ -162,8 +164,8 @@ class BookAppointmentViewModel @Inject constructor(
     private fun saveAppointment(patientId: Int) {
 
         val newAppointment = Appointment(
-            time = setTime.value,
-            date = DateUtils.longStringToDate(setDate.value),
+            time = setTime.value!!,
+            date = setDate.value!!,
             doctor = selectedDoctor.value!!,
             appointmentId = 0,
             specialist = selectedDoctor.value!!.specialist
@@ -213,17 +215,24 @@ class BookAppointmentViewModel @Inject constructor(
     private fun handleUpdateAppointment() {
 
         val appointmentUpdate = AppointmentUpdate(appointmentId = appointment.value!!.appointmentId)
+        var update = false
 
         if (setTime.value != appointment.value!!.time){
-            appointmentUpdate.time = setTime.value
-
-            if (setDate.value != DateUtils.dateToString(appointment.value!!.date)){
-                appointmentUpdate.date = DateUtils.longStringToDate(setDate.value)
-                updateAppointment(appointmentUpdate)
-            } else {
-                _state.value = BookAppointmentState(validateError = "No changes have been made")
-            }
+            appointmentUpdate.time = setTime.value!!
+            update = true
         }
+
+        if (setDate.value != appointment.value!!.date){
+            appointmentUpdate.date = setDate.value
+            update = true
+        }
+
+        if (update){
+            updateAppointment(appointmentUpdate)
+        } else {
+            _state.value = BookAppointmentState(validateError = "No changes have been made")
+        }
+
 
     }
 

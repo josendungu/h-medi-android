@@ -23,7 +23,13 @@ class UpdateAppointmentUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val isUpdated = repository.updateAppointment(appointment)
-            emit(Resource.Success<Boolean>(isUpdated))
+
+            if (isUpdated == 1 ){
+                emit(Resource.Success<Boolean>(true))
+            } else {
+                emit(Resource.Success<Boolean>(false))
+
+            }
 
         } catch (e: HttpException) {
             emit(Resource.Error<Boolean>(e.localizedMessage ?: "An unexpected error occurred"))

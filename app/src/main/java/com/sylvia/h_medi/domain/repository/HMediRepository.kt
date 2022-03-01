@@ -25,7 +25,7 @@ interface HMediRepository {
 
     suspend fun deleteAppointment(appointmentId: Int): Boolean
 
-    suspend fun updateAppointment(appointment: AppointmentUpdate): Boolean
+    suspend fun updateAppointment(appointment: AppointmentUpdate): Int
 
     suspend fun getSpecialistList(): List<SpecialistDto>
 
