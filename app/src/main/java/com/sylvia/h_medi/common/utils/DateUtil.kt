@@ -37,16 +37,15 @@ object DateUtils {
 
 
     fun timeToString(time: LocalTime): String{
-        val format = DateTimeFormatter.ofPattern("H:mm")
+        val format = DateTimeFormatter.ofPattern("H:mm:ss")
         return time.format(format)
     }
 
-    fun stringToTime(string: String): LocalTime {
+
+    fun dbStringToTime(string: String): LocalTime {
         val dateFormatter = DateTimeFormatter.ofPattern("H:mm:ss")
         return LocalTime.parse(string, dateFormatter)
     }
 
-    fun createTimestamp(): Date{
-        return Date()
-    }
+
 }

@@ -67,7 +67,11 @@ fun AppointmentListScreen(
                     modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)
                 )
 
-                LazyColumn(modifier = Modifier.fillMaxSize()){
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 70.dp)
+                ){
 
                     items(state.appointments) { appointment ->
                         AppointmentItem(appointment){

@@ -60,7 +60,7 @@ fun AppointmentDetailScreen(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, theYear: Int, theMonth: Int, dayOfMonth: Int ->
-            val date = LocalDate.of(theYear, theMonth, dayOfMonth)
+            val date = LocalDate.of(theYear, theMonth+1, dayOfMonth)
             viewModel.setDate.value = date
         }, year, month, day
     )
@@ -69,7 +69,7 @@ fun AppointmentDetailScreen(
     val timePickerDialog = TimePickerDialog(
         context,
         {_, hour : Int, minute: Int ->
-            val time = LocalTime.of(hour, minute)
+            val time = LocalTime.of(hour, minute, 0)
             viewModel.setTime.value = time
         }, initHour, initMinute, false
 
@@ -106,7 +106,7 @@ fun AppointmentDetailScreen(
                                 "Update Appointment"
                             },
                             modifier = Modifier
-                                .padding(start = 40.dp),
+                                .padding(start = 20.dp),
                             style = Typography.h4
                         )
                     }
