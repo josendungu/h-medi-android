@@ -3,6 +3,7 @@ package com.sylvia.h_medi.presentation.ui.doctorDetail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -35,78 +36,86 @@ fun DoctorDetailScreen(
     HMediTheme {
 
 
-        Box(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MyBlue)
         ) {
 
 
-            if (viewModel.currentDoctor.value != null) {
-                val image = loadPicture(
-                    url = viewModel.currentDoctor.value!!.imageUrl,
-                    defaultImage = Constants.DEFAULT_IMAGE
-                ).value
+            item {
 
-                Column {
-                    image?.let {
-                        Image(
-                            bitmap = it.asImageBitmap(),
-                            contentDescription = "",
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    if (viewModel.currentDoctor.value != null) {
+                        val image = loadPicture(
+                            url = viewModel.currentDoctor.value!!.imageUrl,
+                            defaultImage = Constants.DEFAULT_IMAGE
+                        ).value
+
+                        Column {
+                            image?.let {
+                                Image(
+                                    bitmap = it.asImageBitmap(),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .height(350.dp)
+                                        .fillMaxWidth(),
+                                    contentScale = ContentScale.Fit
+                                )
+                            }
+
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .offset(y = 10.dp),
+                                shape = RoundedCornerShape(
+                                    topStart = 20.dp,
+                                    topEnd = 20.dp
+                                ),
+                                backgroundColor = Color.White,
+                                elevation = 7.dp,
+
+                                ) {
+                                DoctorDetails(
+                                    rating = viewModel.currentDoctor.value!!.rating,
+                                    firstName = viewModel.currentDoctor.value!!.firstName,
+                                    lastName = viewModel.currentDoctor.value!!.lastName,
+                                    specialist = viewModel.currentDoctor.value!!.specialist,
+                                    emailToClip = { viewModel.emailToClipBoard() },
+                                    phoneToClip = { viewModel.phoneToClipBoard() },
+                                    about = viewModel.currentDoctor.value!!.about,
+                                    bookAppointment = { viewModel.makeAppointment() }
+                                )
+
+                            }
+                        }
+
+
+
+                    }
+
+
+                    if (state.error.isNotBlank()) {
+                        Text(
+                            text = state.error,
+                            color = MaterialTheme.colors.error,
+                            textAlign = TextAlign.Center,
                             modifier = Modifier
-                                .height(350.dp)
-                                .fillMaxWidth(),
-                            contentScale = ContentScale.Fit
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                                .align(Alignment.Center)
                         )
                     }
 
-                    Card(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .offset(y = 10.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 20.dp,
-                            topEnd = 20.dp
-                        ),
-                        backgroundColor = Color.White,
-                        elevation = 7.dp,
 
-                    ) {
-                        DoctorDetails(
-                            rating = viewModel.currentDoctor.value!!.rating,
-                            firstName = viewModel.currentDoctor.value!!.firstName,
-                            lastName = viewModel.currentDoctor.value!!.lastName,
-                            specialist = viewModel.currentDoctor.value!!.specialist,
-                            emailToClip = { viewModel.emailToClipBoard() },
-                            phoneToClip = { viewModel.phoneToClipBoard() },
-                            about = viewModel.currentDoctor.value!!.about,
-                            bookAppointment = { viewModel.makeAppointment() }
-                        )
-
+                    if (state.isLoading) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
                 }
 
-
-
             }
 
 
-            if (state.error.isNotBlank()) {
-                Text(
-                    text = state.error,
-                    color = MaterialTheme.colors.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .align(Alignment.Center)
-                )
-            }
-
-
-            if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
 
         }
     }

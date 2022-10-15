@@ -108,13 +108,13 @@ fun EmergencyScreen(
                         label = {
                             Text(
                                 text = "Emergency Type",
-                                style = Typography.h5
+                                style = Typography.h6
                             )
                         },
                         modifier = Modifier
                             .height(55.dp)
                             .fillMaxWidth(),
-                        textStyle = Typography.h5,
+                        textStyle = Typography.h6,
                     )
 
                     OutlinedTextField(
@@ -123,13 +123,13 @@ fun EmergencyScreen(
                         label = {
                             Text(
                                 text = "Description",
-                                style = Typography.h5
+                                style = Typography.h6
                             )
                         },
                         modifier = Modifier
                             .height(55.dp)
                             .fillMaxWidth(),
-                        textStyle = Typography.h5,
+                        textStyle = Typography.h6,
                         maxLines = 10
                     )
 
@@ -143,7 +143,7 @@ fun EmergencyScreen(
                             .height(50.dp)
                     ) {
                         Text(
-                            text = "Register",
+                            text = "Send",
                             style = Typography.h4
                         )
                     }

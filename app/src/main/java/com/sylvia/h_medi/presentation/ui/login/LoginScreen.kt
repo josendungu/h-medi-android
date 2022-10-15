@@ -103,7 +103,7 @@ fun LoginScreen(
                     label = {
                         Text(
                             text = "Phone Number",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier

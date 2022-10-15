@@ -55,14 +55,14 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "First Name",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5,
+                    textStyle = Typography.h6,
                 )
 
                 OutlinedTextField(
@@ -71,14 +71,14 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "Last Name",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5,
+                    textStyle = Typography.h6,
                 )
 
                 OutlinedTextField(
@@ -87,18 +87,18 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "Phone Number",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5,
+                    textStyle = Typography.h6,
                     placeholder = {
                         Text(
                             text = "254xxxxxxxxx",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     }
                 )
@@ -109,14 +109,14 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "Gender",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5
+                    textStyle = Typography.h6
                 )
 
                 Spacer(modifier = Modifier.padding(20.dp))
@@ -134,14 +134,14 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "Password",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5,
+                    textStyle = Typography.h6,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     singleLine = true,
                     trailingIcon = {
@@ -165,14 +165,14 @@ fun ProfileScreen(
                     label = {
                         Text(
                             text = "Confirm Password",
-                            style = Typography.h5
+                            style = Typography.h6
                         )
                     },
                     modifier = Modifier
                         .height(55.dp)
                         .padding(horizontal = 10.dp)
                         .fillMaxWidth(),
-                    textStyle = Typography.h5,
+                    textStyle = Typography.h6,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     singleLine = true,
                     trailingIcon = {
